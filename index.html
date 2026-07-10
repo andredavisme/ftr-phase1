@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Fork in the Road – Phase 1 Plan</title>
+  <style>
+    :root {
+      --red: #c0392b;
+      --warm: #f5f0e8;
+      --dark: #2c2c2c;
+      --mid: #555;
+      --accent: #e67e22;
+      --green: #27ae60;
+      --blue: #2980b9;
+      --card: #ffffff;
+      --border: #e0d8cc;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Georgia', serif;
+      background: var(--warm);
+      color: var(--dark);
+      line-height: 1.7;
+    }
+    header {
+      background: var(--red);
+      color: white;
+      padding: 3rem 2rem 2rem;
+      text-align: center;
+    }
+    header h1 {
+      font-size: 2.6rem;
+      letter-spacing: 1px;
+      margin-bottom: 0.4rem;
+    }
+    header p.subtitle {
+      font-size: 1.1rem;
+      opacity: 0.88;
+      font-style: italic;
+    }
+    header p.byline {
+      margin-top: 0.8rem;
+      font-size: 0.95rem;
+      opacity: 0.75;
+    }
+    nav {
+      background: var(--dark);
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 0.25rem;
+      padding: 0.75rem 1rem;
+    }
+    nav a {
+      color: #f0e8d8;
+      text-decoration: none;
+      padding: 0.4rem 0.9rem;
+      border-radius: 4px;
+      font-size: 0.9rem;
+      font-family: sans-serif;
+      transition: background 0.2s;
+    }
+    nav a:hover { background: var(--red); }
+    main {
+      max-width: 900px;
+      margin: 2.5rem auto;
+      padding: 0 1.5rem 4rem;
+    }
+    .intro-box {
+      background: white;
+      border-left: 5px solid var(--red);
+      padding: 1.5rem 1.8rem;
+      border-radius: 6px;
+      margin-bottom: 2.5rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    }
+    .intro-box h2 { color: var(--red); margin-bottom: 0.75rem; font-size: 1.4rem; }
+    .intro-box p { color: var(--mid); font-size: 1.05rem; }
+    section {
+      margin-bottom: 3rem;
+    }
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      margin-bottom: 1.2rem;
+      border-bottom: 2px solid var(--border);
+      padding-bottom: 0.6rem;
+    }
+    .section-header .icon {
+      font-size: 1.8rem;
+    }
+    .section-header h2 {
+      font-size: 1.55rem;
+      color: var(--red);
+    }
+    .card {
+      background: var(--card);
+      border-radius: 8px;
+      padding: 1.4rem 1.6rem;
+      margin-bottom: 1.2rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+      border: 1px solid var(--border);
+    }
+    .card h3 {
+      font-size: 1.2rem;
+      color: var(--dark);
+      margin-bottom: 0.5rem;
+    }
+    .card p { color: var(--mid); margin-bottom: 0.6rem; }
+    .card ul {
+      padding-left: 1.3rem;
+      color: var(--mid);
+    }
+    .card ul li { margin-bottom: 0.35rem; }
+    .tag {
+      display: inline-block;
+      font-size: 0.78rem;
+      font-family: sans-serif;
+      font-weight: bold;
+      padding: 0.2rem 0.65rem;
+      border-radius: 20px;
+      margin-bottom: 0.6rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .tag-passive { background: #d5f5e3; color: #1e8449; }
+    .tag-social  { background: #d6eaf8; color: #1a5276; }
+    .tag-seasonal{ background: #fdebd0; color: #784212; }
+    .tag-low     { background: #f9ebea; color: #922b21; }
+    .highlight-box {
+      background: #fef9f0;
+      border: 1px dashed var(--accent);
+      border-radius: 6px;
+      padding: 1.1rem 1.4rem;
+      margin-top: 0.8rem;
+      color: var(--mid);
+      font-size: 0.97rem;
+    }
+    .highlight-box strong { color: var(--accent); }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-family: sans-serif;
+      font-size: 0.93rem;
+      margin-top: 0.5rem;
+    }
+    th {
+      background: var(--red);
+      color: white;
+      padding: 0.7rem 0.9rem;
+      text-align: left;
+    }
+    td {
+      padding: 0.65rem 0.9rem;
+      border-bottom: 1px solid var(--border);
+      vertical-align: top;
+    }
+    tr:nth-child(even) td { background: #faf6f0; }
+    .goal-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1rem;
+      margin-top: 0.5rem;
+    }
+    .goal-card {
+      background: white;
+      border-top: 4px solid var(--accent);
+      border-radius: 6px;
+      padding: 1rem 1.2rem;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+    }
+    .goal-card h4 { font-size: 1rem; margin-bottom: 0.4rem; color: var(--dark); }
+    .goal-card p { font-size: 0.92rem; color: var(--mid); }
+    .timeline-block {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 1rem;
+      align-items: flex-start;
+    }
+    .timeline-dot {
+      min-width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: var(--red);
+      color: white;
+      font-family: sans-serif;
+      font-size: 0.8rem;
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 0.2rem;
+    }
+    .timeline-content h4 { font-size: 1.05rem; color: var(--dark); margin-bottom: 0.3rem; }
+    .timeline-content p { font-size: 0.95rem; color: var(--mid); }
+    footer {
+      text-align: center;
+      padding: 2rem;
+      font-family: sans-serif;
+      font-size: 0.85rem;
+      color: #999;
+      border-top: 1px solid var(--border);
+      margin-top: 2rem;
+    }
+    @media (max-width: 600px) {
+      header h1 { font-size: 1.8rem; }
+      nav a { font-size: 0.82rem; padding: 0.35rem 0.65rem; }
+      table { font-size: 0.82rem; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>🍕 Fork in the Road</h1>
+  <p class="subtitle">Phase 1 — Community &amp; Growth Plan</p>
+  <p class="byline">Portland, Maine &nbsp;·&nbsp; One City Center &nbsp;·&nbsp; Year One</p>
+</header>
+
+<nav>
+  <a href="#overview">Overview</a>
+  <a href="#programs">Programs</a>
+  <a href="#signage">Pay-It-Forward Board</a>
+  <a href="#social">Social Media</a>
+  <a href="#calendar">12-Month Calendar</a>
+  <a href="#workflow">Your Weekly Workflow</a>
+  <a href="#nextsteps">Next Steps</a>
+</nav>
+
+<main>
+
+  <!-- INTRO -->
+  <div class="intro-box">
+    <h2>A Note for Joe</h2>
+    <p>
+      This plan was built with one thing in mind: <strong>your time is the most valuable ingredient in the kitchen.</strong>
+      Everything here is designed to work for a solo operator — mostly running on its own once it's set up, with only a small
+      amount of your attention each week. No tech background needed. No big budget required. Just a few smart moves
+      that will get Fork in the Road known, loved, and busy in Portland.
+    </p>
+  </div>
+
+  <!-- OVERVIEW -->
+  <section id="overview">
+    <div class="section-header">
+      <span class="icon">🎯</span>
+      <h2>What We're Trying to Do</h2>
+    </div>
+    <div class="goal-grid">
+      <div class="goal-card">
+        <h4>🤝 Serve the Community</h4>
+        <p>Build a reputation as the pizza spot that genuinely gives back to Portland — veterans, students, neighbors.</p>
+      </div>
+      <div class="goal-card">
+        <h4>📈 Bring in More Customers</h4>
+        <p>Get more people through the door consistently — not just on random good days — throughout the whole year.</p>
+      </div>
+      <div class="goal-card">
+        <h4>💰 Improve Profit Margins</h4>
+        <p>Target a 5% improvement in what you keep after costs, by designing smart combo deals that protect your margins.</p>
+      </div>
+    </div>
+    <div class="card" style="margin-top:1.2rem;">
+      <h3>Your Situation Right Now</h3>
+      <p>You're open Monday–Friday, 10am–3pm. You run the place yourself, with occasional help from a family member. Hiring part-time help is a goal 6–8 months out. The two businesses next door — Dunkin' and City Deli — already have their lanes. <strong>Your lane is community, craft, and character.</strong> That's what this plan builds on.</p>
+    </div>
+  </section>
+
+  <!-- PROGRAMS -->
+  <section id="programs">
+    <div class="section-header">
+      <span class="icon">🛠️</span>
+      <h2>The Programs — Set It &amp; Let It Run</h2>
+    </div>
+    <p style="color:var(--mid); margin-bottom:1.2rem; font-family:sans-serif; font-size:0.95rem;">
+      These are called <em>passive programs</em> — meaning you set them up once and they keep working without you needing to do anything extra each day.
+    </p>
+
+    <div class="card">
+      <span class="tag tag-passive">Passive · Start Now</span>
+      <h3>🪙 Pay-It-Forward Wall</h3>
+      <p>A customer pays for a future stranger's meal — you put their name or a note on a board. The next person who needs it claims it. It costs you nothing to run, creates a talking point, and gives people a reason to share your restaurant online and with friends.</p>
+      <ul>
+        <li>A simple chalkboard, corkboard with index cards, or your existing in-store TV can all work</li>
+        <li>Customers write a note, you pin it up — the next claimant takes one down</li>
+        <li>Optional: add a raffle jar so each donated meal also enters a fun drawing</li>
+      </ul>
+      <div class="highlight-box">
+        <strong>Recommended approach:</strong> Use the chalkboard or corkboard for the warm, personal feel — and your existing TV screen (already installed, no extra cost) to display a running tally like "14 meals donated this month." A small tablet ($150–$300 one-time) can update that screen remotely.
+      </div>
+    </div>
+
+    <div class="card">
+      <span class="tag tag-passive">Passive · Start Now</span>
+      <h3>🎖️ Veteran Thank-You Combo</h3>
+      <p>A fixed-price meal designed to say thank you to veterans — no ID check needed. You simply create a "Veteran Combo" (e.g. a slice + drink at a set price) and post a sign. Anyone who identifies as a veteran orders it. Trust in community is part of your brand.</p>
+      <ul>
+        <li>Build the combo around ingredients that keep your cost predictable — not a percentage off random items</li>
+        <li>A static sign on the counter is all you need. Post once, done.</li>
+        <li>Major restaurant chains like Mission BBQ use this exact honor-based approach</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <span class="tag tag-passive">Passive · Start Now</span>
+      <h3>🎒 Student Combo</h3>
+      <p>A simple, affordable pre-set meal aimed at students and young workers in the building and nearby. Available every day — no extra prep, no separate rush to manage. Priced at a flat dollar amount so your costs stay predictable.</p>
+      <ul>
+        <li>One or two options max — e.g. "1 slice + small drink" at a fixed price</li>
+        <li>Pre-portion ingredients during slow periods so service stays fast during rushes</li>
+        <li>Post a small sign and list it on your social media once — it runs itself</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <span class="tag tag-passive">Passive · Start Now</span>
+      <h3>🏢 Portland Business Lunch Program</h3>
+      <p>A standing lunch deal for office workers in One City Center and nearby buildings. You send one email to building management — they forward it to their tenants. After that, it runs on word of mouth and a simple discount code.</p>
+      <ul>
+        <li>Give the code a memorable name (something tied to the building or Portland)</li>
+        <li>No printed cards or apps needed — just something people remember and say out loud</li>
+        <li>Reaches office workers who are already in your building and looking for a lunch option</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <span class="tag tag-passive">Passive · Future Opportunities</span>
+      <h3>🎬 Nickelodeon Cinema Partnership</h3>
+      <p>The Nickelodeon Cinema is right across the street. A simple cross-promotion — "Show your ticket stub, get a deal" — ties movie nights to Fork in the Road. This is a conversation to start, not a day-one project.</p>
+    </div>
+
+    <div class="card">
+      <span class="tag tag-passive">Passive · Future Opportunities</span>
+      <h3>📻 Radio Station Relationships (WBLM &amp; WCYY)</h3>
+      <p>You already have a connection with staff at both stations. That relationship is worth nurturing. A shoutout on local radio — even informal — reaches thousands of Portland-area listeners. Keep the door open and let it happen naturally.</p>
+    </div>
+
+    <div class="card">
+      <span class="tag tag-seasonal">Seasonal</span>
+      <h3>🏕️ Summer Camp Meal Program</h3>
+      <p>Off-site meal prep for summer camps is a real revenue opportunity with no walk-in traffic required. This is a mid-year goal — plan for June–August when the program is in the seasonal calendar.</p>
+    </div>
+
+    <div class="card">
+      <span class="tag tag-seasonal">Seasonal</span>
+      <h3>🍂 Community Fundraiser Nights</h3>
+      <p>Partner with a local organization — school, nonprofit, neighborhood group — for one night where a portion of sales supports their cause. They promote it to their audience; you get traffic. Plan one per quarter to start.</p>
+    </div>
+  </section>
+
+  <!-- SIGNAGE -->
+  <section id="signage">
+    <div class="section-header">
+      <span class="icon">📋</span>
+      <h2>Pay-It-Forward Board — Your Options</h2>
+    </div>
+    <table>
+      <thead>
+        <tr><th>Option</th><th>Cost</th><th>Upkeep</th><th>Best For</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Chalkboard</strong></td>
+          <td>$20–$60 one-time</td>
+          <td>Erase &amp; rewrite as needed</td>
+          <td>Warm, personal feel — most community-friendly look</td>
+        </tr>
+        <tr>
+          <td><strong>Corkboard + Index Cards</strong></td>
+          <td>$15–$40 one-time</td>
+          <td>Pin &amp; remove cards</td>
+          <td>Customer interaction — they write their own card</td>
+        </tr>
+        <tr>
+          <td><strong>Existing TV Screen</strong></td>
+          <td>$0 hardware (already installed)</td>
+          <td>Occasional digital update</td>
+          <td>Running tally display — "17 meals donated this month"</td>
+        </tr>
+        <tr>
+          <td><strong>Small Tablet</strong></td>
+          <td>$150–$300 one-time</td>
+          <td>Remote update from your phone</td>
+          <td>Flexible placement + remote control</td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="highlight-box" style="margin-top:1rem;">
+      <strong>Best combo:</strong> Corkboard with index cards (for the personal touch customers love) + existing TV showing a live tally. Low cost. High impact. No daily labor.
+    </div>
+  </section>
+
+  <!-- SOCIAL -->
+  <section id="social">
+    <div class="section-header">
+      <span class="icon">📱</span>
+      <h2>Social Media — Simple &amp; Steady Wins</h2>
+    </div>
+    <p style="color:var(--mid); margin-bottom:1rem; font-family:sans-serif; font-size:0.95rem;">
+      Right now Fork in the Road has almost no online presence. The goal isn't to go viral — it's to show up consistently so that when someone in Portland searches for pizza or a lunch spot, you're there.
+    </p>
+    <div class="card">
+      <h3>📘 Facebook &amp; Instagram</h3>
+      <p>Your main channel for reaching regular customers — locals, office workers, students, families. Post the same content on both platforms at the same time. Think of these as your <em>community bulletin board</em>.</p>
+      <ul>
+        <li>Show off your food with a simple phone photo — natural light, no fancy camera needed</li>
+        <li>Highlight your programs (pay-it-forward milestones, student combo, veteran combo)</li>
+        <li>Share moments: a busy lunch rush, a fun customer story, a seasonal special</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>💼 LinkedIn</h3>
+      <p>LinkedIn is where Portland businesses and office workers live online. Use it to reach building managers, corporate lunch buyers, and local business owners. Think of it as your <em>B2B handshake</em>.</p>
+      <ul>
+        <li>Post the Business Lunch Program discount as a "corporate perk" businesses can share with employees</li>
+        <li>Send a personal connection request to One City Center management with a short friendly note</li>
+        <li>One post per month on LinkedIn is enough to start building visibility</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- CALENDAR -->
+  <section id="calendar">
+    <div class="section-header">
+      <span class="icon">📅</span>
+      <h2>12-Month Seasonal Calendar</h2>
+    </div>
+    <p style="color:var(--mid); margin-bottom:1rem; font-family:sans-serif; font-size:0.95rem;">
+      Each month has a theme, a featured program, and a suggested post angle. You don't have to follow it exactly — treat it like a recipe: use it as a guide, adjust to taste.
+    </p>
+    <table>
+      <thead>
+        <tr><th>Month</th><th>Theme</th><th>Featured Program</th><th>Post Angle</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>January</strong></td><td>New year, fresh start</td><td>Pay-It-Forward</td><td>"New year, pay it forward" — resolution tie-in</td></tr>
+        <tr><td><strong>February</strong></td><td>Winter warmth &amp; Valentine's</td><td>Student Combo</td><td>Comfort-food slice deals for students</td></tr>
+        <tr><td><strong>March</strong></td><td>Spring awakening</td><td>Business Lunch</td><td>Office lunch specials as spring returns</td></tr>
+        <tr><td><strong>April</strong></td><td>Community &amp; civic spirit</td><td>Pay-It-Forward</td><td>Spring spotlight — update the raffle jar tally</td></tr>
+        <tr><td><strong>May</strong></td><td>Local business month</td><td>Business Lunch</td><td>LinkedIn "corporate perk" push</td></tr>
+        <tr><td><strong>June</strong></td><td>Summer camp kickoff</td><td>Camp Meal Program</td><td>Weekly camp delivery day spotlight</td></tr>
+        <tr><td><strong>July</strong></td><td>Peak summer + cinema season</td><td>Cinema Partnership</td><td>Movie night + slice combo cross-promo</td></tr>
+        <tr><td><strong>August</strong></td><td>Back-to-school prep</td><td>Student Combo</td><td>Back-to-school combo launch</td></tr>
+        <tr><td><strong>September</strong></td><td>School year begins</td><td>Student Combo</td><td>Weekly rush-hour student combo reminder</td></tr>
+        <tr><td><strong>October</strong></td><td>Fall community events</td><td>Fundraiser Night</td><td>Monthly fundraiser night countdown</td></tr>
+        <tr><td><strong>November</strong></td><td>Veterans Day &amp; gratitude</td><td>Veteran Combo</td><td>Weekly thank-you combo spotlight</td></tr>
+        <tr><td><strong>December</strong></td><td>Holiday giving season</td><td>Pay-It-Forward</td><td>Holiday tally + year-end recap</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- WORKFLOW -->
+  <section id="workflow">
+    <div class="section-header">
+      <span class="icon">⏱️</span>
+      <h2>Your Actual Time Commitment</h2>
+    </div>
+    <p style="color:var(--mid); margin-bottom:1.2rem; font-family:sans-serif; font-size:0.95rem;">
+      This whole plan is built to ask as little of your time as possible. Here's what it actually looks like week to week:
+    </p>
+    <div class="timeline-block">
+      <div class="timeline-dot">1×<br>mo</div>
+      <div class="timeline-content">
+        <h4>Monthly Batch Session — ~2 Hours</h4>
+        <p>Once a month, sit down and write out all your posts for the coming month. Schedule them in advance using a free tool like Meta Business Suite (Facebook/Instagram's own free scheduler). Do it all at once — like prep work before a big service.</p>
+      </div>
+    </div>
+    <div class="timeline-block">
+      <div class="timeline-dot">1×<br>wk</div>
+      <div class="timeline-content">
+        <h4>Weekly Post — ~5 Minutes</h4>
+        <p>Same day, same time each week (e.g. every Wednesday at 10am) — post whichever pre-written update is ready for that week. Building a consistent rhythm trains your audience to expect you and keeps your name in their feed.</p>
+      </div>
+    </div>
+    <div class="timeline-block">
+      <div class="timeline-dot">as<br>needed</div>
+      <div class="timeline-content">
+        <h4>Real-Time Moments — Whenever They Happen</h4>
+        <p>A big pay-it-forward milestone. A radio shoutout from WBLM. A great customer moment. Post these when they happen — they don't disrupt the plan, they add to it. These organic moments are often the most engaging content of all.</p>
+      </div>
+    </div>
+    <div class="highlight-box">
+      <strong>Total planned time per month:</strong> One 2-hour session + a few minutes each week to post. Everything else runs on its own.
+    </div>
+  </section>
+
+  <!-- NEXT STEPS -->
+  <section id="nextsteps">
+    <div class="section-header">
+      <span class="icon">✅</span>
+      <h2>Next Steps — In Order</h2>
+    </div>
+    <p style="color:var(--mid); margin-bottom:1.2rem; font-family:sans-serif; font-size:0.95rem;">
+      Don't try to do everything at once. Here's a suggested order of operations for your first 30 days:
+    </p>
+    <div class="card">
+      <h3>Week 1 — Set Up the Foundation</h3>
+      <ul>
+        <li>Put up the Pay-It-Forward board in-store (chalkboard or corkboard — your call)</li>
+        <li>Write the Veteran Combo and Student Combo onto your menu board or a small counter sign</li>
+        <li>Create your Facebook, Instagram, and LinkedIn pages if not already done</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>Week 2 — Reach Out</h3>
+      <ul>
+        <li>Email One City Center building management with your Business Lunch discount code</li>
+        <li>Send a LinkedIn connection request to building management and any known Portland business contacts</li>
+        <li>Post an introduction on Facebook/Instagram — who you are, what Fork in the Road is about</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>Week 3–4 — Get Into Rhythm</h3>
+      <ul>
+        <li>Do your first monthly batch session: write 4 posts for the coming month, schedule them</li>
+        <li>Pick your weekly posting day and stick to it</li>
+        <li>Walk across the street and introduce yourself to Nickelodeon Cinema management</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>Month 2 and Beyond</h3>
+      <ul>
+        <li>Follow the seasonal calendar — adjust based on what's working</li>
+        <li>Track which programs bring in the most new faces and lean into those</li>
+        <li>Around month 6, revisit the idea of part-time help — by then, the programs will be generating enough traffic to justify it</li>
+      </ul>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  Fork in the Road &nbsp;·&nbsp; Portland, Maine &nbsp;·&nbsp; Phase 1 Community &amp; Growth Plan &nbsp;·&nbsp; 2026
+</footer>
+
+</body>
+</html>
